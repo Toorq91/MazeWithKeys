@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toorq's Labyrinth</title>
+    <link rel="icon" href="img/maze.png" />
+    <style>
+
+        div.buttons {
+            width: 30rem;
+            padding-top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        div.board {
+            display: grid;
+            grid-template-columns: repeat(3, 10rem);
+            grid-template-rows: repeat(2, 10rem);
+        }
+
+        div.square {
+            border: 2px solid black;
+            font-size: 200%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="app"></div>
+
+    <script>
+        // model
+        let smileyPosition = 0;
+
+
+        // view
+        updateview();
+
+        function updateview() {
+            document.getElementById('app').innerHTML = /*HTML*/`
+            <div class="board">
+                <div style="color: black;" class="square">1${getContent(0)}<img style="width: 20%;" src="img/orangekey.png"/></div>
+                <div style="color: purple;" class="square">2${getContent(1)}<img style="width: 20%;" src="img/redkey.png"/></div>
+                <div style="color: blue;" class="square">3${getContent(2)}<img style="width: 20%;" src="img/greenkey.png"/></div>
+                <div style="color: orange;" class="square">4${getContent(3)}<img style="width: 20%;" src="img/purplekey.png"/></div>
+                <div style="color: red;" class="square">5${getContent(4)}<img style="width: 20%;" src="img/bluekey.png"/></div>
+                <div style="color: green;" class="square">6${getContent(5)}<img style="width: 20%;" src="img/finish.webp"/></div>
+            </div>
+            <div class="buttons">
+                    <button ${getDisabled(-3)} onclick="moveSmiley(-3)">▲</button>
+                <div>
+                    <button ${getDisabled(-1)} onclick="moveSmiley(-1)">◀</button>
+                    <button ${getDisabled(1)} onclick="moveSmiley(1)">▶</button>
+                </div>
+                    <button ${getDisabled(3)} onclick="moveSmiley(3)">▼</button>
+            </div>
+            `;
+        }
+
+        function getContent(position) {
+            if (smileyPosition == position) {
+                return '😲'
+            } else {
+                return '';
+            }
+        }
+
+        function getDisabled(change) {
+            if (smileyPosition == 0 && change == -1) return 'disabled';
+            if (smileyPosition == 0 && change == -3) return 'disabled';
+            if (smileyPosition == 1 && change == -3) return 'disabled';
+            if (smileyPosition == 2 && change == -3) return 'disabled';
+            if (smileyPosition == 2 && change == 1) return 'disabled';
+            if (smileyPosition == 3 && change == -1) return 'disabled';
+            if (smileyPosition == 3 && change == 3) return 'disabled';
+            if (smileyPosition == 4 && change == 3) return 'disabled';
+            if (smileyPosition == 5 && change == 1) return 'disabled';
+            if (smileyPosition == 5 && change == 3) return 'disabled';
+            return '';
+        }
+
+        // controller
+        function moveSmiley(change) {
+            smileyPosition += change;
+            updateview();
+        }
+
+
+    </script>
+</body>
+
+</html>
